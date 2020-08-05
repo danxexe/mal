@@ -92,7 +92,7 @@ DOCKERIZE =
 IMPLS = ada ada.2 awk bash basic bbc-basic c chuck clojure coffee common-lisp cpp crystal cs d dart \
 	elisp elixir elm erlang es6 factor fantom forth fsharp go groovy gnu-smalltalk \
 	guile haskell haxe hy io java js jq julia kotlin livescript logo lua make mal \
-	matlab miniMAL nasm nim objc objpascal ocaml perl perl6 php picolisp pike plpgsql \
+	matlab miniMAL nasm nim objc objpascal ocaml perl perl6 php php7 picolisp pike plpgsql \
 	plsql powershell ps python python.2 r racket rexx rpython ruby rust scala scheme skew \
 	swift swift3 swift4 swift5 tcl ts vala vb vhdl vimscript wasm wren yorick xslt zig
 
@@ -238,6 +238,7 @@ ocaml_STEP_TO_PROG =         impls/ocaml/$($(1))
 perl_STEP_TO_PROG =          impls/perl/$($(1)).pl
 perl6_STEP_TO_PROG =         impls/perl6/$($(1)).pl
 php_STEP_TO_PROG =           impls/php/$($(1)).php
+php7_STEP_TO_PROG =          impls/php7/$($(1)).php
 picolisp_STEP_TO_PROG =      impls/picolisp/$($(1)).l
 pike_STEP_TO_PROG =          impls/pike/$($(1)).pike
 plpgsql_STEP_TO_PROG =       impls/plpgsql/$($(1)).sql
