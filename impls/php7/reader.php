@@ -77,7 +77,7 @@ function read_list(Reader $reader): MalList {
 function read_atom(Reader $reader): MalType {
 	$token = $reader->next();
 
-	if (preg_match('/^\d+$/', $token)) {
+	if (preg_match('/^-?\d+$/', $token)) {
 		return new MalInt(intval($token));
 	} else {
 		return new MalSymbol($token);

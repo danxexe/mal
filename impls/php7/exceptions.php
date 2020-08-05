@@ -13,3 +13,6 @@ class MalException extends \Exception implements MalType {
 
 class SyntaxError extends MalException {
 }
+
+class UnknownSymbol extends MalException {
+}

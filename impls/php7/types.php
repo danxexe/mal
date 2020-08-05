@@ -5,7 +5,11 @@ interface MalType {
 	public function toString(): string;
 }
 
-class MalList implements MalType {
+interface BoxedType {
+	public function unbox();
+}
+
+class MalList implements MalType, BoxedType {
 	private $val = null;
 
 	public function __construct(array $val) {
@@ -17,9 +21,13 @@ class MalList implements MalType {
 
 		return '(' . implode(" ", $children) . ')';
 	}
+
+	public function unbox(): array {
+		return $this->val;
+	}
 }
 
-class MalInt implements MalType {
+class MalInt implements MalType, BoxedType {
 	private $val = null;
 
 	public function __construct(int $val) {
@@ -29,9 +37,13 @@ class MalInt implements MalType {
 	public function toString(): string {
 		return "{$this->val}";
 	}
+
+	public function unbox(): int {
+		return $this->val;
+	}
 }
 
-class MalSymbol implements MalType {
+class MalSymbol implements MalType, BoxedType {
 	private $val = null;
 
 	public function __construct(string $val) {
@@ -40,5 +52,29 @@ class MalSymbol implements MalType {
 
 	public function toString(): string {
 		return $this->val;
+	}
+
+	public function unbox(): string {
+		return $this->val;
+	}
+}
+
+class MalFunction implements MalType, BoxedType {
+	private $val = null;
+
+	public function __construct(callable $val) {
+		$this->val = $val;
+	}
+
+	public function toString(): string {
+		return "function";
+	}
+
+	public function unbox(): callable {
+		return $this->val;
+	}
+
+	public function call($args) {
+		return call_user_func_array($this->val, $args);
 	}
 }
