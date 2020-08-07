@@ -6,6 +6,8 @@ require_once 'exceptions.php';
 
 use mal\MalType;
 use mal\MalList;
+use mal\MalVector;
+use mal\MalCollection;
 use mal\MalInt;
 use mal\MalSymbol;
 use mal\exceptions\SyntaxError;
@@ -52,26 +54,32 @@ function read_form(Reader $reader): MalType {
 	}
 
 	if ($token === '(') {
-		return read_list($reader);
+		return read_list($reader, ')');
+	} else 	if ($token === '[') {
+		return read_list($reader, ']');
 	} else {
 		return read_atom($reader);
 	}
 }
 
-function read_list(Reader $reader): MalList {
+function read_list(Reader $reader, string $closing_token): MalCollection {
 	$list = [];
 
 	// discard (
 	$reader->next();
 
-	while($reader->peek() !== ')') {
+	while($reader->peek() !== $closing_token) {
 		$list []= read_form($reader);
 	}
 
 	// discard )
 	$reader->next();
 
-	return new MalList($list);
+	if ($closing_token === ')') {
+		return new MalList($list);
+	} else if ($closing_token === ']') {
+		return new MalVector($list);
+	}
 }
 
 function read_atom(Reader $reader): MalType {
